@@ -1,11 +1,9 @@
 package ca.demo.terminal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
     public static void main(String[] args) {
-
         System.out.println("------------------------------");
         System.out.println("Hello! I'm Duke");
         System.out.println("What can I do for you?");
@@ -31,10 +29,46 @@ public class Duke {
                 System.out.println("------------------------------");
                 System.out.println("Here are the tasks in your list:");
                 for (int j = 0; j < mytasks.size(); j += 1) {
-                    System.out.print((j + 1) + ". [" );
-                    System.out.print(mytasks.get(j).getStatusIcon() + "] ");
-                    System.out.println(mytasks.get(j).description());
+                    System.out.print((j + 1) + ". ");
+                    System.out.println(mytasks.get(j));
                 }
+                System.out.println("------------------------------");
+            }
+
+            else if (check.equals("deadline")) {
+                System.out.println("------------------------------");
+                System.out.println("Got it. I've added this task: ");
+                int index = inputString.indexOf('/');
+                String deadline_by = inputString.substring(index + 4);
+                String deadline = inputString.substring(9, index -1);
+                mytasks.add(new Deadline(deadline, deadline_by));
+                System.out.println(mytasks.get(i));
+                i = i + 1;
+                System.out.println("Now you have " + mytasks.size() + " tasks in the list.");
+                System.out.println("------------------------------");
+            }
+
+            else if (check.equals("todo")) {
+                System.out.println("------------------------------");
+                System.out.println("Got it. I've added this task: ");
+                String desc = inputString.substring(5);
+                mytasks.add(new ToDo(desc));
+                System.out.println(mytasks.get(i));
+                i = i + 1;
+                System.out.println("Now you have " + mytasks.size() + " tasks in the list.");
+                System.out.println("------------------------------");
+            }
+
+            else if (check.equals("event")) {
+                System.out.println("------------------------------");
+                System.out.println("Got it. I've added this task: ");
+                int index = inputString.indexOf('/');
+                String event = inputString.substring(6, index - 1);
+                String event_at = inputString.substring(index + 4);
+                mytasks.add(new Event(event, event_at));
+                System.out.println(mytasks.get(i));
+                i = i + 1;
+                System.out.println("Now you have " + mytasks.size() + " tasks in the list.");
                 System.out.println("------------------------------");
             }
 
@@ -49,20 +83,16 @@ public class Duke {
 
                 int result = Integer.parseInt(String.valueOf(sb));
                 mytasks.get(result - 1).markAsDone();
+                System.out.println("------------------------------");
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.print("[" + mytasks.get(result - 1).getStatusIcon() + "] ");
                 System.out.println(mytasks.get(result - 1).description());
+                System.out.println("------------------------------");
+
             }
 
             else {
-                Task t = new Task(inputString);
-                mytasks.add(t);
-                System.out.println("------------------------------");
-                System.out.print("added: ");
-                System.out.println(inputString);
-                System.out.println("------------------------------");
             }
         }
     }
 }
-
