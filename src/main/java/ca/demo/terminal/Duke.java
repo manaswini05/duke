@@ -13,10 +13,11 @@ public class Duke {
     private static List<String> changeValueOf(String imp, int newVal){
         List<String> newLines = new ArrayList<String>();
         for(String line: lines){
-            if(line.contains(imp)){
-                String [] vals = line.split("-");
+            String [] vals = line.split("-");
+            if(vals[2].equals(imp)){
                 newLines.add(vals[0] + "-" + String.valueOf(newVal) + "-" + vals[2]);
-            }else{
+            }
+            else {
                 newLines.add(line);
             }
         }
@@ -26,10 +27,10 @@ public class Duke {
     private static List<String> changeValueOf1(String imp, int newVal){
         List<String> newLines = new ArrayList<String>();
         for(String line: lines){
-            if(line.contains(imp)){
-                String [] vals = line.split("-");
-                newLines.add(vals[0] + "-" + String.valueOf(newVal) + "-" + vals[2] + "-" + vals[3]);
-            }else{
+            String [] vals = line.split("-");
+            if(vals[2].equals(imp)){
+                newLines.add(vals[0] + "-" + String.valueOf(newVal) + "-" + vals[2] + "-" + vals[3] + "-" + vals[4]);
+            } else {
                 newLines.add(line);
             }
         }
@@ -57,7 +58,57 @@ public class Duke {
         //String[] storage= new String[100];
         ArrayList<Task> mytasks = new ArrayList<Task>();
         int i = 0;
-        int y = 0;
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String st;
+            while ((st = br.readLine()) != null) {
+                String[] data = st.split("-");
+                if (data[0].equals("T")) {
+                    ToDo t = new ToDo(data[2]);
+                    if (data[1].equals("1")) {
+                        t.isDone = true;
+                    } else {
+                        t.isDone = false;
+                    }
+                    mytasks.add(t);
+                    i = i + 1;
+                }
+
+                if (data[0].equals("D")) {
+                    String deadline_date = data[3];
+                    String deadline_time = data[4];
+                    String deadline = data[2];
+                    Deadline d = new Deadline(deadline, deadline_date + " -" + deadline_time);
+                    if (data[1].equals("1")) {
+                        d.isDone = true;
+                    } else {
+                        d.isDone = false;
+                    }
+                    mytasks.add(d);
+                    i = i + 1;
+                }
+
+                if (data[0].equals("E")) {
+                    String event_date = data[3];
+                    String event_time = data[4];
+                    String event = data[2];
+                    Event e = new Event(event, event_date + " " + event_time);
+                    if (data[1].equals("1")) {
+                        e.isDone = true;
+                    } else {
+                        e.isDone = false;
+                    }
+                    mytasks.add(e);
+                    i = i + 1;
+                }
+            }
+
+        } catch (IOException e) {
+                    e.printStackTrace();
+        }
+
+
 
         while (true) {
             BufferedWriter bw = null;
@@ -93,64 +144,10 @@ public class Duke {
                         System.out.println("------------------------------");
                         System.out.println("Bye. Hope to see you again soon!");
                         System.out.println("------------------------------");
-                        y = 0;
                         break;
                     }
 
                     else if (inputString.equals(list)) {
-                        if(y == 0) {
-                        try {
-                            BufferedReader br = new BufferedReader(new FileReader(filename));
-                            String st;
-                            while ((st = br.readLine()) != null) {
-
-                                String [] data = st.split("-");
-                                if(data[0].equals("T")) {
-                                    ToDo t = new ToDo(data[2]);
-                                    if(data[1].equals("1")) {
-                                        t.isDone = true;
-                                    }
-                                    else {
-                                        t.isDone = false;
-                                    }
-                                    mytasks.add(t);
-                                    i = i + 1;
-                                }
-
-                                if(data[0].equals("D")) {
-                                    String deadline_by = data[3];
-                                    String deadline = data[2];
-                                    Deadline d = new Deadline(deadline, deadline_by);
-                                    if(data[1].equals("1")) {
-                                        d.isDone = true;
-                                    }
-                                    else {
-                                        d.isDone = false;
-                                    }
-                                    mytasks.add(d);
-                                    i = i + 1;
-                                }
-
-                                if(data[0].equals("E")) {
-                                    String event_at = data[3];
-                                    String event = data[2];
-                                    Event e = new Event(event, event_at);
-                                    if(data[1].equals("1")) {
-                                        e.isDone = true;
-                                    }
-                                    else {
-                                        e.isDone = false;
-                                    }
-                                    mytasks.add(e);
-                                    i = i + 1;
-                                }
-                            }
-                            y = 1;
-                        } catch (IOException e){
-                            e.printStackTrace();
-                        }
-                        }
-
                         System.out.println("------------------------------");
                         System.out.println("Here are the tasks in your list:");
                         for (int j = 0; j < mytasks.size(); j += 1) {
@@ -162,14 +159,17 @@ public class Duke {
                         System.out.println("------------------------------");
                         System.out.println("Got it. I've added this task: ");
                         int index = inputString.indexOf('/');
-                        String deadline_by = inputString.substring(index + 4);
+                        String deadline_by = inputString.substring(index + 4, inputString.length() - 5);
+                        String time_deadline = inputString.substring(inputString.length() - 4);
                         String deadline = inputString.substring(9, index - 1);
-                        mytasks.add(new Deadline(deadline, deadline_by));
+
+                        mytasks.add(new Deadline(deadline, UnderstandDate.convertDate(deadline_by, time_deadline)));
                         System.out.println(mytasks.get(i));
+
                         i = i + 1;
                         System.out.println("Now you have " + mytasks.size() + " tasks in the list.");
                         System.out.println("------------------------------");
-                        String data = "D-" + mytasks.get(i - 1).getStatusNumber() + "-" + deadline + "-" + deadline_by + "\n";
+                        String data = "D-" + mytasks.get(i - 1).getStatusNumber() + "-" + deadline + "-" + UnderstandDate.convertDate(deadline_by, time_deadline) + "\n";
                         bw.write(data);
                     } else if (check.equals("todo")) {
 
@@ -189,13 +189,14 @@ public class Duke {
                         System.out.println("Got it. I've added this task: ");
                         int index = inputString.indexOf('/');
                         String event = inputString.substring(6, index - 1);
-                        String event_at = inputString.substring(index + 4);
-                        mytasks.add(new Event(event, event_at));
+                        String event_at = inputString.substring(index + 4, inputString.length() - 5);
+                        String time_event = inputString.substring(inputString.length() - 4);
+                        mytasks.add(new Event(event, UnderstandDate.convertDate(event_at, time_event)));
                         System.out.println(mytasks.get(i));
                         i = i + 1;
                         System.out.println("Now you have " + mytasks.size() + " tasks in the list.");
                         System.out.println("------------------------------");
-                        String data = "E-" + mytasks.get(i - 1).getStatusNumber() + "-" + event + "-" + event_at + "\n";
+                        String data = "E-" + mytasks.get(i - 1).getStatusNumber() + "-" + event + "-" + UnderstandDate.convertDate(event_at, time_event) + "\n";
                         bw.write(data);
                     } else if (check.equals(done)) {
                         char[] chars = inputString.toCharArray();
