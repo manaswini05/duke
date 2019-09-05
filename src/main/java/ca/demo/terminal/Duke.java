@@ -60,8 +60,8 @@ public class Duke {
     static void error_handling(String input) throws MyException {
         String first = input.split(" ")[0];
         if (first.equals("todo") || first.equals("deadline") || first.equals("event") || first.equals("done") || first.equals("list")
-                || first.equals("bye") || first.equals("delete")) {
-            if (input.equals("todo") || input.equals("deadline") || input.equals("event") || input.equals("done") || input.equals("delete")) {
+                || first.equals("bye") || first.equals("delete") || first.equals("find")) {
+            if (input.equals("todo") || input.equals("deadline") || input.equals("event") || input.equals("done") || input.equals("delete") || input.equals("find")) {
                 throw new MyException("OOPS!!! The description of a " + input + " cannot be empty.");
             }
         } else {
@@ -247,7 +247,20 @@ public class Duke {
                         System.out.println("------------------------------");
                         i = i - 1;
 
-                    } else if (check.equals(done)) {
+                    } else if (check.equals("find")) {
+                        String toBeFound = inputString.split(" ")[1];
+                        System.out.println("------------------------------");
+                        int b = 1;
+                        for(int a = 0; a < mytasks.size(); a++) {
+                            if(mytasks.get(a).description().contains(toBeFound)) {
+                                System.out.println(b + ". " + mytasks.get(a));
+                                b++;
+                            }
+                        }
+                        System.out.println("------------------------------");
+                    }
+
+                    else if (check.equals(done)) {
                         char[] chars = inputString.toCharArray();
                         StringBuilder sb = new StringBuilder();
                         for (char c : chars) {
