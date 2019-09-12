@@ -10,6 +10,10 @@ public class UnderstandDate {
     protected String date;
     protected String time;
 
+    /*
+        @param date
+        @param time
+     */
     public UnderstandDate(String date, String time) {
         this.date = date;
         this.time = time;
@@ -17,6 +21,9 @@ public class UnderstandDate {
 
     /*
     The function changes the format of the date and time in the desired format and returns a string.
+    @param date the date by which the deadline is due or the event is on
+    @param time the time by which the deadline is due or the event is at
+    @return string of date and time converted in the required format
      */
     public static String convertDate(String date, String time) {
         String[] vals = date.split("/"); //the date is split whenever there is a backslash

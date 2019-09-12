@@ -8,11 +8,18 @@ package ca.demo.terminal;
 public class Deadline extends Task {
     protected String by;
 
+    /*
+        @param description description or what the deadline is
+        @param by when the deadline is due
+     */
     public Deadline(String description, String by) {
         super(description);
         this.by = by;
     }
 
+    /*
+        @return a string in the format with which it is stored in the dynamic arraylist.
+     */
     @Override
     public String toString() {
         return ("[D][" + super.getStatusIcon() + "] " + super.description()  + " (by: " + by + ")");

@@ -9,17 +9,25 @@ public class Task {
     protected boolean isDone;
     protected String type;
 
+    /*
+        @param description the description of the task
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
-    // This function returns a cross or tick unicode character based on whether the task entered is done or not.
+    /* This function returns a cross or tick unicode character based on whether the task entered is done or not.
+        @return tick/X symbol
+     */
+
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
 
-    //This function returns a 0 or 1 depending on whether the task is done or not as it is stored in the file this way.
+    /*This function returns a 0 or 1 depending on whether the task is done or not as it is stored in the file this way.
+        @return 0 or 1
+     */
     public String getStatusNumber() {
         return (isDone ? "1" : "0");
     }
@@ -30,7 +38,9 @@ public class Task {
     }
 
     //...
-    //This function returns the description of the task in form of a string.
+    /*This function returns the description of the task in form of a string.
+        @return description the description of the task in string format
+     */
     public String description() {
         return this.description;
     }

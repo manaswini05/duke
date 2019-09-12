@@ -14,6 +14,11 @@ public class ProcessCommands {
     ArrayList<Task> mytasks1 = Duke.getTasks();
     private static final String filename = "/Users/manaswinitalagadadivi/duke/store.txt";
 
+    /*
+        @param inputString the input entered by the user
+        @param check the first word of the inputString
+     */
+
     public void process(String inputString, String check) throws IOException {
 
         BufferedWriter bw = null; //initialising bufferedwriter and filewriter to

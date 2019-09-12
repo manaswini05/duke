@@ -9,10 +9,16 @@ package ca.demo.terminal;
 public class ToDo extends Task {
     protected String by;
 
+    /*
+        @param description the description of the Todo
+     */
     public ToDo(String description) {
         super(description);
     }
 
+    /*
+        @return the string which contains the details of the task in the required format
+     */
     @Override
     public String toString() {
         return ("[T][" + super.getStatusIcon() + "] " + super.description());

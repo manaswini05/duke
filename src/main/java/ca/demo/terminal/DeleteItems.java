@@ -21,6 +21,8 @@ public class DeleteItems {
         This function adds the word REMOVED on the line in which the particular task to be deleted is found. It will then
         not be processed for further calculations. It takes in the description of the task as a parameter and if the
         3rd part of the split string in the file is the same as the parameter, the word REMOVED is then tagged along.
+        @param imp description of the task
+        @return newLines the line in the text file which is modified is returned
      */
     private static List<String> AddRemoved(String imp){
         List<String> newLines = new ArrayList<String>();
@@ -42,6 +44,7 @@ public class DeleteItems {
 
     /* This function obtains the number in the inputString i.e. the number of the task in the list that is to be removed.
         The index is then located in mylists1 and deleted.
+        @param inputString the input entered by the user.
      */
 
     public void processing(String inputString) throws IOException {

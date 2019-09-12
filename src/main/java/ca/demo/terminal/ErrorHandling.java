@@ -7,6 +7,7 @@ public class ErrorHandling {
         with the message that the particular word entered is unknown. Moreover, if the words todo, deadline, event,
         done, delete, or find are entered without specifying anything else, MyException can be thrown again saying tht
         the description cannot be empty
+        @param input  the input string of the user
      */
 
     static void error_handling(String input) throws MyException {
@@ -21,6 +22,12 @@ public class ErrorHandling {
         }
     }
 
+    /*
+        This function returns an integer based on whether there is an error or not. After the error_handling method is
+        carried out, if there is an error, the integer 1 is returned. If not, 0 is returned, for further processing.
+        @param inputString the input string entered by the user
+        @return 0 or 1
+     */
     public Integer handle_error(String inputString) {
         try {
             error_handling(inputString); //the method error_handling is called

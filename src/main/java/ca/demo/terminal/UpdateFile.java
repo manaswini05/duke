@@ -24,6 +24,9 @@ public class UpdateFile {
     /* This function is called if the task that has been done is a To Do and not an event or Deadline. All the lines
         in the text file are split. Whenever the 3rd part of the split string(which is the description) is equal to the
         String imp(description of the task), the value of 0 is replaced with 1.
+        @param imp the description of the task
+        @param newVal the value to which the old value in a particular line is to be changed
+        @return newLines the new line in the text file that has been updated
      */
     private static List<String> changeValueOf(String imp, int newVal){
         List<String> newLines = new ArrayList<String>();
@@ -42,6 +45,9 @@ public class UpdateFile {
     /* This function is called if the task that has been done is an Event or a Deadline and not a To Do. All the lines
         in the text file are split. Whenever the 3rd part of the split string(which is the description) is equal to the
         String imp(description of the task), the value of 0 is replaced with 1.
+        @param imp the description of the task
+        @param newVal the value to which the old value in a particular line is to be changed
+        @return newLines the new line in the text file that has been updated
      */
 
     private static List<String> changeValueOf1(String imp, int newVal){
@@ -61,6 +67,7 @@ public class UpdateFile {
         This function processes the input string. It obtains the number of the task in the list done and checks the nature
         of the task, if it is a To Do, Event or Deadline and then calls the relevant function from the above 2 for the
         change to be made.
+        @param inputString
      */
     public void processing(String inputString) throws IOException {
 
