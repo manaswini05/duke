@@ -6,14 +6,22 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+This class is used to delete items from the list upon user input and also make the likewise changes to the text file.
+ */
 public class DeleteItems {
 
     private static final String filename = "/Users/manaswinitalagadadivi/duke/store.txt";
     File file = new File(filename);
     private static List<String> lines;
     Duke dj = new Duke();
-    ArrayList<Task> mytasks1 = Duke.getTasks();
+    ArrayList<Task> mytasks1 = Duke.getTasks(); //obtains the dynamic array list to store tasks from the main class - Duke.
 
+    /*
+        This function adds the word REMOVED on the line in which the particular task to be deleted is found. It will then
+        not be processed for further calculations. It takes in the description of the task as a parameter and if the
+        3rd part of the split string in the file is the same as the parameter, the word REMOVED is then tagged along.
+     */
     private static List<String> AddRemoved(String imp){
         List<String> newLines = new ArrayList<String>();
         for(String line: lines){
@@ -32,6 +40,10 @@ public class DeleteItems {
         return newLines;
     }
 
+    /* This function obtains the number in the inputString i.e. the number of the task in the list that is to be removed.
+        The index is then located in mylists1 and deleted.
+     */
+
     public void processing(String inputString) throws IOException {
         char[] chars = inputString.toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -41,11 +53,11 @@ public class DeleteItems {
             }
         }
 
-        int result = Integer.parseInt(String.valueOf(sb));
+        int result = Integer.parseInt(String.valueOf(sb)); //converts the digit in the form of a character to integer
 
-        String imp = mytasks1.get(result - 1).description();
+        String imp = mytasks1.get(result - 1).description(); //the description of the task at the corresponding index is stored
         lines = Files.readAllLines(file.toPath(), Charset.defaultCharset());
-        AddRemoved(imp);
+        AddRemoved(imp); //the description of the task is passed onto the AddRemoved method which has been described above.
         Files.write(file.toPath(), AddRemoved(imp), Charset.defaultCharset());
 
         System.out.println("------------------------------");

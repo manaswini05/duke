@@ -2,6 +2,10 @@ package ca.demo.terminal;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/* This class converts the date entered in integer format to words i.e. 11/9/2019 as 11th of September 2019 and 24hr
+    timing to 12hr timing. It then concatenates the two pieces and returns the complete string.
+ */
+
 public class UnderstandDate {
     protected String date;
     protected String time;
@@ -11,14 +15,19 @@ public class UnderstandDate {
         this.time = time;
     }
 
+    /*
+    The function changes the format of the date and time in the desired format and returns a string.
+     */
     public static String convertDate(String date, String time) {
-        String[] vals = date.split("/");
-        int D = Integer.parseInt(vals[0]);
-        int M = Integer.parseInt(vals[1]);
-        int Y = Integer.parseInt(vals[2]);
+        String[] vals = date.split("/"); //the date is split whenever there is a backslash
+        int D = Integer.parseInt(vals[0]); //first part of the split string is the day
+        int M = Integer.parseInt(vals[1]); //second part of the split string is the month
+        int Y = Integer.parseInt(vals[2]); //third part of the split string is the year
         String converted_date = null;
+        //the months are stored in the form of an array to access them based on int M.
         String [] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
+        //The following if-else conditions are to add a suffix to the date values.
         if(D == 1 || D == 21 || D == 31 ) {
             converted_date = D + "st";
         }
@@ -35,11 +44,14 @@ public class UnderstandDate {
             converted_date = D + "th";
         }
 
+        //Based on the integer M, the particular month is obtained by accessing M-1th index of the array.
         String month = months[M-1];
 
         //time
+        //this Java function converts 24hr time to 12hr time
         String result = LocalTime.parse(time, DateTimeFormatter.ofPattern("Hmm")).format(DateTimeFormatter.ofPattern("hh:mm a"));
 
+        //a string with all the converted date and time is concatenated and returned.
         return (converted_date + " of " + month + " " + Y + " " + "-" + result);
     }
 }
